@@ -13,6 +13,8 @@ BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 WHITE='\033[1;37m'
+ORANGE='\033[1;38;5;209m'
+DIM='\033[2m'
 NC='\033[0m'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -28,12 +30,25 @@ CLAUDE_MD_PATH="$CLAUDE_DIR/CLAUDE.md"
 
 print_banner() {
     echo ""
-    echo -e "${MAGENTA}╔═══════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${MAGENTA}║${NC}                                                               ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}   ${CYAN}Solana Payments Skill${NC}                                       ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}   ${WHITE}Accept money that settles — Pay, USDC, subscriptions${NC}        ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}                                                               ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}╚═══════════════════════════════════════════════════════════════╝${NC}"
+    printf '%b' "$ORANGE"
+    cat <<'EOF'
+   ███████╗ ██████╗ ██╗     ██████╗  █████╗ ██╗   ██╗
+   ██╔════╝██╔═══██╗██║     ██╔══██╗██╔══██╗╚██╗ ██╔╝
+   ███████╗██║   ██║██║     ██████╔╝███████║ ╚████╔╝
+   ╚════██║██║   ██║██║     ██╔═══╝ ██╔══██║  ╚██╔╝
+   ███████║╚██████╔╝███████╗██║     ██║  ██║   ██║
+   ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝   ╚═╝
+                ██╗  ██╗██╗████████╗
+                ██║ ██╔╝██║╚══██╔══╝
+                █████╔╝ ██║   ██║
+                ██╔═██╗ ██║   ██║
+                ██║  ██╗██║   ██║
+                ╚═╝  ╚═╝╚═╝   ╚═╝
+EOF
+    printf '%b' "$NC"
+    echo ""
+    echo -e "   ${WHITE}Solana Payment Solution${NC} ${DIM}— accept money that actually settles${NC}"
+    echo -e "   ${DIM}Solana Pay · USDC · subscriptions · payment links · off-ramp${NC}"
     echo ""
 }
 
@@ -55,6 +70,71 @@ print_help() {
     echo ""
     echo "For custom installation options, use: ./install-custom.sh"
     echo ""
+}
+
+print_guide() {
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}WHAT IS SOLPAY KIT?${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  It turns your AI coding agent into a ${WHITE}Solana payments expert${NC}."
+    echo -e "  Solana has no \"Stripe\". This skill gives your agent the full,"
+    echo -e "  ${WHITE}safe${NC} playbook to take money and ${WHITE}know you actually got paid${NC}."
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}WHAT YOU CAN BUILD WITH IT${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  ${ORANGE}1.${NC} ${WHITE}Accept a payment${NC}  — Solana Pay links/QRs, pay in USDC"
+    echo -e "  ${ORANGE}2.${NC} ${WHITE}Verify a payment${NC} — confirm on-chain it really paid"
+    echo -e "  ${ORANGE}3.${NC} ${WHITE}Subscriptions${NC}    — charge \$X every month, safely"
+    echo -e "  ${ORANGE}4.${NC} ${WHITE}Payment links${NC}    — shareable invoices / checkout pages"
+    echo -e "  ${ORANGE}5.${NC} ${WHITE}Cash out (fiat)${NC}  — send USDC to a bank via an off-ramp"
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}HOW TO USE IT (just talk to your agent)${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  Open your project in Claude Code / Cursor and ask in plain"
+    echo -e "  English. The agent loads the right part of the skill by itself."
+    echo ""
+    echo -e "  ${WHITE}Example prompts (copy-paste):${NC}"
+    echo -e "    ${ORANGE}›${NC} \"Let customers pay me in USDC and confirm on-chain\""
+    echo -e "    ${ORANGE}›${NC} \"Make a Solana Pay QR / payment link for order #123\""
+    echo -e "    ${ORANGE}›${NC} \"Build a \$10/month subscription with a bounded delegate\""
+    echo -e "    ${ORANGE}›${NC} \"Make sure a duplicate webhook can't double-charge\""
+    echo -e "    ${ORANGE}›${NC} \"Let users cash out USDC to a bank (off-ramp)\""
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}COMMANDS (type these to the agent)${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  ${ORANGE}/verify-payment${NC} <reference or signature>"
+    echo -e "      Checks on-chain that the right amount/token/recipient paid."
+    echo -e "  ${ORANGE}/payments-audit${NC}"
+    echo -e "      Scans your checkout/subscription code for money-losing bugs."
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}THE SAFETY RULES IT ALWAYS FOLLOWS${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  ${GREEN}•${NC} Check the blockchain, never trust the browser \"success\""
+    echo -e "  ${GREEN}•${NC} Never charge or credit the same payment twice"
+    echo -e "  ${GREEN}•${NC} Never approve unlimited spending for subscriptions"
+    echo -e "  ${GREEN}•${NC} Wait for \"finalized\" before shipping / paying out"
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}WHERE IT IS & WHAT'S NEXT${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  Installed to: ${CYAN}$SKILL_PATH${NC}"
+    echo -e "  Tip: also install ${WHITE}solana-tx-skill${NC} so every payment lands"
+    echo -e "  reliably under network load:"
+    echo -e "    ${DIM}curl -fsSL https://raw.githubusercontent.com/skyyycodes/solana-tx-skill/main/setup.sh | bash${NC}"
+    echo ""
+    echo -e "  ${DIM}If a command isn't recognized, restart your agent so it picks${NC}"
+    echo -e "  ${DIM}up the new commands.${NC}"
 }
 
 # Parse arguments
@@ -131,14 +211,6 @@ echo -e "  ${GREEN}✓${NC} Installed to $CLAUDE_MD_PATH"
 
 # Done
 echo ""
-echo -e "${GREEN}╔═══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║${NC}  ${WHITE}Installation Complete!${NC}                                       ${GREEN}║${NC}"
-echo -e "${GREEN}╚═══════════════════════════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "${CYAN}Try asking your agent:${NC}"
-echo -e "  ${BLUE}•${NC} \"Let customers pay me in USDC and confirm when they've paid\""
-echo -e "  ${BLUE}•${NC} \"Generate a Solana Pay QR / payment link for an order\""
-echo -e "  ${BLUE}•${NC} \"Build a \$10/month subscription with a bounded delegate\""
-echo -e "  ${BLUE}•${NC} \"Did this payment settle?\"  (/verify-payment)"
-echo -e "  ${BLUE}•${NC} \"Audit our checkout for payment-safety gaps\"  (/payments-audit)"
+echo -e "${GREEN}  ✓ Installation complete — SOLPAY KIT is ready.${NC}"
+print_guide
 echo ""

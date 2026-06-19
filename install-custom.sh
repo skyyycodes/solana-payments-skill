@@ -13,6 +13,8 @@ BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 WHITE='\033[1;37m'
+ORANGE='\033[1;38;5;209m'
+DIM='\033[2m'
 NC='\033[0m'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -28,13 +30,46 @@ CLAUDE_BASE=""
 
 print_banner() {
     echo ""
-    echo -e "${MAGENTA}╔═══════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${MAGENTA}║${NC}                                                               ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}   ${CYAN}Solana Payments Skill${NC}                                       ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}   ${WHITE}Custom Installer${NC}                                            ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║${NC}                                                               ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}╚═══════════════════════════════════════════════════════════════╝${NC}"
+    printf '%b' "$ORANGE"
+    cat <<'EOF'
+   ███████╗ ██████╗ ██╗     ██████╗  █████╗ ██╗   ██╗
+   ██╔════╝██╔═══██╗██║     ██╔══██╗██╔══██╗╚██╗ ██╔╝
+   ███████╗██║   ██║██║     ██████╔╝███████║ ╚████╔╝
+   ╚════██║██║   ██║██║     ██╔═══╝ ██╔══██║  ╚██╔╝
+   ███████║╚██████╔╝███████╗██║     ██║  ██║   ██║
+   ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝   ╚═╝
+                ██╗  ██╗██╗████████╗
+                ██║ ██╔╝██║╚══██╔══╝
+                █████╔╝ ██║   ██║
+                ██╔═██╗ ██║   ██║
+                ██║  ██╗██║   ██║
+                ╚═╝  ╚═╝╚═╝   ╚═╝
+EOF
+    printf '%b' "$NC"
     echo ""
+    echo -e "   ${WHITE}Solana Payment Solution${NC} ${DIM}— custom installer${NC}"
+    echo ""
+}
+
+print_guide() {
+    echo ""
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}WHAT YOU CAN BUILD WITH SOLPAY KIT${NC}"
+    echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "  ${ORANGE}1.${NC} ${WHITE}Accept a payment${NC}  — Solana Pay links/QRs, pay in USDC"
+    echo -e "  ${ORANGE}2.${NC} ${WHITE}Verify a payment${NC} — confirm on-chain it really paid"
+    echo -e "  ${ORANGE}3.${NC} ${WHITE}Subscriptions${NC}    — charge \$X every month, safely"
+    echo -e "  ${ORANGE}4.${NC} ${WHITE}Payment links${NC}    — shareable invoices / checkout pages"
+    echo -e "  ${ORANGE}5.${NC} ${WHITE}Cash out (fiat)${NC}  — send USDC to a bank via an off-ramp"
+    echo ""
+    echo -e "  ${WHITE}Just ask your agent in plain English, e.g.:${NC}"
+    echo -e "    ${ORANGE}›${NC} \"Let customers pay me in USDC and confirm on-chain\""
+    echo -e "    ${ORANGE}›${NC} \"Build a \$10/month subscription with a bounded delegate\""
+    echo ""
+    echo -e "  ${WHITE}Commands:${NC}  ${ORANGE}/verify-payment${NC} <ref|sig>   ${ORANGE}/payments-audit${NC}"
+    echo ""
+    echo -e "  ${DIM}Tip: also install solana-tx-skill so every payment lands reliably.${NC}"
 }
 
 print_help() {
@@ -159,14 +194,7 @@ install_claude_md
 
 # Done
 echo ""
-echo -e "${GREEN}╔═══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║${NC}  ${WHITE}Installation Complete!${NC}                                       ${GREEN}║${NC}"
-echo -e "${GREEN}╚═══════════════════════════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "${WHITE}Skill:${NC} $SKILL_INSTALL_PATH"
-echo ""
-echo -e "${CYAN}Try asking your agent:${NC}"
-echo -e "  ${BLUE}•${NC} \"Accept USDC at checkout and verify it on-chain\""
-echo -e "  ${BLUE}•${NC} \"Did this payment settle?\"  (/verify-payment)"
-echo -e "  ${BLUE}•${NC} \"Audit our checkout for payment-safety gaps\"  (/payments-audit)"
+echo -e "${GREEN}  ✓ Installation complete — SOLPAY KIT is ready.${NC}"
+echo -e "  ${WHITE}Skill:${NC} $SKILL_INSTALL_PATH"
+print_guide
 echo ""
