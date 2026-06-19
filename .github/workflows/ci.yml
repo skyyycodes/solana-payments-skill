@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  examples:
+    name: typecheck + test (examples)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: examples/package-lock.json
+      - run: npm ci
+      - name: Type-check (commerce + delivery + UX + privacy)
+        run: npm run typecheck
+      - name: Unit tests (amount math, idempotency, cadence, screening, actions)
+        run: npm test
+
+  links:
+    name: markdown link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify internal markdown links resolve
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          root = os.getcwd()
+          link_re = re.compile(r'\[[^\]]+\]\(([^)]+)\)')
+          bad = []
+          for dp, _, fs in os.walk(root):
+              if 'node_modules' in dp or '/.git' in dp:
+                  continue
+              for f in fs:
+                  if not f.endswith('.md'):
+                      continue
+                  p = os.path.join(dp, f)
+                  for m in link_re.finditer(open(p, encoding='utf-8').read()):
+                      u = m.group(1).strip()
+                      if u.startswith(('http://', 'https://', '#', 'mailto:')):
+                          continue
+                      t = u.split('#')[0]
+                      if t and not os.path.exists(os.path.normpath(os.path.join(dp, t))):
+                          bad.append(f"{os.path.relpath(p, root)} -> {u}")
+          if bad:
+              print('BROKEN LINKS:')
+              print('\n'.join('  ' + b for b in bad))
+              sys.exit(1)
+          print('All internal markdown links OK')
+          PY

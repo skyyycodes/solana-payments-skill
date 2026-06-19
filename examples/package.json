@@ -1,0 +1,30 @@
+{
+  "name": "solana-payments-skill-examples",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Runnable, type-checked examples for solana-payments-skill",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "devnet": "node --import tsx src/devnet-demo.ts"
+  },
+  "dependencies": {
+    "@solana-program/compute-budget": "^0.16.0",
+    "@solana-program/system": "^0.12.2",
+    "@solana/kit": "^6.10.0",
+    "@solana/pay": "^0.2.5",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.4",
+    "bignumber.js": "^9.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.0"
+  }
+}

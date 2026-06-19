@@ -48,6 +48,7 @@ EOF
     printf '%b' "$NC"
     echo ""
     echo -e "   ${WHITE}Solana Payment Solution${NC} ${DIM}— custom installer${NC}"
+    echo -e "   ${DIM}commerce + bundled transaction delivery${NC}"
     echo ""
 }
 
@@ -61,15 +62,21 @@ print_guide() {
     echo -e "  ${ORANGE}2.${NC} ${WHITE}Verify a payment${NC} — confirm on-chain it really paid"
     echo -e "  ${ORANGE}3.${NC} ${WHITE}Subscriptions${NC}    — charge \$X every month, safely"
     echo -e "  ${ORANGE}4.${NC} ${WHITE}Payment links${NC}    — shareable invoices / checkout pages"
-    echo -e "  ${ORANGE}5.${NC} ${WHITE}Cash out (fiat)${NC}  — send USDC to a bank via an off-ramp"
+    echo -e "  ${ORANGE}5.${NC} ${WHITE}Blinks & mobile${NC}  — pay buttons in X/Discord + phone/POS"
+    echo -e "  ${ORANGE}6.${NC} ${WHITE}Any stablecoin${NC}   — USDC, PYUSD, EURC (+ Token-2022 fees)"
+    echo -e "  ${ORANGE}7.${NC} ${WHITE}Cash out (fiat)${NC}  — send USDC to a bank via an off-ramp"
+    echo -e "  ${ORANGE}8.${NC} ${WHITE}Reliable landing${NC} — fees, retries & Jito so payments don't drop"
+    echo ""
+    echo -e "  ${DIM}+ treasury/key safety, sanctions screening, tested examples (npm test) + CI.${NC}"
     echo ""
     echo -e "  ${WHITE}Just ask your agent in plain English, e.g.:${NC}"
     echo -e "    ${ORANGE}›${NC} \"Let customers pay me in USDC and confirm on-chain\""
     echo -e "    ${ORANGE}›${NC} \"Build a \$10/month subscription with a bounded delegate\""
+    echo -e "    ${ORANGE}›${NC} \"Turn this payment into a Blink for X / Discord\""
     echo ""
-    echo -e "  ${WHITE}Commands:${NC}  ${ORANGE}/verify-payment${NC} <ref|sig>   ${ORANGE}/payments-audit${NC}"
+    echo -e "  ${WHITE}Commands:${NC}  ${ORANGE}/verify-payment${NC} <ref|sig>   ${ORANGE}/payments-audit${NC}   ${ORANGE}/diagnose-tx${NC} <sig>"
     echo ""
-    echo -e "  ${DIM}Tip: also install solana-tx-skill so every payment lands reliably.${NC}"
+    echo -e "  ${DIM}Transaction-delivery layer is bundled in — payments land reliably out of the box.${NC}"
 }
 
 print_help() {

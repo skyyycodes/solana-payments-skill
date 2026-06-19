@@ -31,10 +31,11 @@ out/
 .next/
 .cache/
 
-# Package manager lockfiles
+# Package manager lockfiles (but keep the examples lockfile for reproducible type-checks)
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+!examples/package-lock.json
 
 # TypeScript
 *.tsbuildinfo

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Starter Store — Pay with Solana</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font-family: system-ui, sans-serif; max-width: 460px; margin: 8vh auto; padding: 0 20px; line-height: 1.5; }
+      h1 { font-size: 1.4rem; }
+      button { font-size: 1rem; padding: 12px 18px; border: 0; border-radius: 10px; background: #ff7a45; color: #fff; cursor: pointer; }
+      button:disabled { opacity: .6; cursor: default; }
+      .qr { margin: 18px 0; }
+      .qr img { width: 240px; height: 240px; border-radius: 12px; }
+      .status { font-weight: 600; margin: 14px 0; }
+      a.pay { display: inline-block; margin-top: 8px; }
+      code { background: rgba(127,127,127,.18); padding: 1px 6px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>Starter Store</h1>
+    <p>Pay <strong>1.00 USDC</strong> (devnet) — no backend secrets, fully on-chain verified.</p>
+
+    <button id="pay">Pay with Solana</button>
+    <p class="status" id="status"></p>
+    <div class="qr" id="qr"></div>
+    <div id="receipt"></div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const setStatus = (t) => ($('status').textContent = t);
+
+      $('pay').addEventListener('click', async () => {
+        $('pay').disabled = true;
+        setStatus('Creating order…');
+
+        const order = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ amount: '1.00' }),
+        }).then((r) => r.json());
+
+        // Render the Solana Pay URL as a QR (public QR image endpoint for the demo).
+        const qr = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(order.url)}`;
+        $('qr').innerHTML = `<img src="${qr}" alt="Scan with a Solana wallet" />`;
+        setStatus('Waiting for payment…');
+        $('status').insertAdjacentHTML('afterend', `<a class="pay" href="${order.url}">Open in wallet</a>`);
+
+        // Poll the SERVER, which verifies on-chain. The client never decides "paid".
+        const deadline = Date.now() + 120000;
+        while (Date.now() < deadline) {
+          const s = await fetch(`/api/orders/${order.orderId}/status`).then((r) => r.json());
+          if (s.status === 'confirmed') {
+            setStatus('✅ Payment confirmed!');
+            $('receipt').innerHTML = `<p>Receipt: <a href="https://solscan.io/tx/${s.signature}?cluster=devnet" target="_blank">view transaction</a></p>`;
+            return;
+          }
+          if (s.status === 'expired') { setStatus('⌛ Payment window expired.'); $('pay').disabled = false; return; }
+          await new Promise((r) => setTimeout(r, 1500));
+        }
+        setStatus('⌛ Timed out — try again.');
+        $('pay').disabled = false;
+      });
+    </script>
+  </body>
+</html>
