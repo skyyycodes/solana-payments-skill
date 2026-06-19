@@ -1,0 +1,75 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+.secrets
+
+# Secrets and keys
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+secrets.json
+credentials.json
+keypair.json
+*-keypair.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.cache/
+
+# Package manager lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# TypeScript
+*.tsbuildinfo
+
+# Solana / Anchor
+target/
+.anchor/
+test-ledger/
+.program-keys/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.iml
+*~
+*.swp
+*.swo
+
+# Local Claude settings
+.claude/settings.local.json
+
+# Temp
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+*.log
+logs/
